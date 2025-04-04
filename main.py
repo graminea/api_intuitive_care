@@ -7,14 +7,16 @@ app = Flask(__name__)
 
 CORS(app)
 
+def get_db_connection():
 # Connect to PostgreSQL
-DATABASE_URL = "postgresql://graminea:npg_4AJZu6SDTFEI@ep-square-sun-a4690bwt-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
-conn = psycopg2.connect((DATABASE_URL))
-conn.set_client_encoding('UTF8')
-cursor = conn.cursor()
+    DATABASE_URL = "postgresql://graminea:npg_4AJZu6SDTFEI@ep-square-sun-a4690bwt-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    conn = psycopg2.connect((DATABASE_URL))
+    return conn
 
 @app.route("/search", methods=["GET"])
 def search():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     table = request.args.get("table", "Relatorio_cadop")  # Default table
     column = request.args.get("column", "razao_social")   # Default column
     value = request.args.get("value", "")  # Search term
@@ -52,4 +54,5 @@ def search():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
