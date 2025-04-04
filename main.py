@@ -36,7 +36,7 @@ def search():
 
     if column == "reg_ans" or column == "cnpj":
         query = f'SELECT * FROM {table} WHERE {column} = %s'
-        cursor.execute(query, (f"%{value}%"))
+        cursor.execute(query, (value, ))
 
         rows = cursor.fetchall()
         col_names = [desc[0] for desc in cursor.description]
@@ -51,7 +51,7 @@ def search():
     else:
     # Use ILIKE for partial case-insensitive match
         query = f'SELECT * FROM {table} WHERE {column} ILIKE %s'
-        cursor.execute(query, (f"%{value}%"))
+        cursor.execute(query, (f"%{value}%",))
 
         rows = cursor.fetchall()
         col_names = [desc[0] for desc in cursor.description]
