@@ -9,7 +9,7 @@ CORS(app)
 
 def get_db_connection():
 # Connect to PostgreSQL
-    conn = psycopg2.connect(os.getenv(DATABASE_URL))
+    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
     return conn
 
 @app.route("/search", methods=["GET"])
