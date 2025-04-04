@@ -24,7 +24,7 @@ def search():
     offset = int(request.args.get("offset", 0))  # Pagination offset
 
     # Secure table and column filtering
-    allowed_tables = ["Relatorio_cadop"]
+    allowed_tables = ["relatorio_cadop"]
     allowed_columns = [
         "reg_ans", 
         "razao_social", 
