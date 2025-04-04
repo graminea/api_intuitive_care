@@ -9,7 +9,6 @@ CORS(app)
 
 def get_db_connection():
 # Connect to PostgreSQL
-    DATABASE_URL = "postgresql://graminea:npg_4AJZu6SDTFEI@ep-square-sun-a4690bwt-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
     conn = psycopg2.connect((DATABASE_URL))
     return conn
 
