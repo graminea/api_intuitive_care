@@ -17,7 +17,7 @@ def get_db_connection():
 def search():
     conn = get_db_connection()
     cursor = conn.cursor()
-    table = request.args.get("table", "Relatorio_cadop")  # Default table
+    table = "relatorio_cadop"
     column = request.args.get("column", "razao_social")   # Default column
     value = request.args.get("value", "")  # Search term
     limit = int(request.args.get("limit", 10))  # Results per page
