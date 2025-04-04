@@ -50,8 +50,8 @@ def search():
     
     else:
     # Use ILIKE for partial case-insensitive match
-        query = f'SELECT * FROM {table} WHERE {column} ILIKE %s LIMIT %s OFFSET %s'
-        cursor.execute(query, (f"%{value}%", limit, offset))
+        query = f'SELECT * FROM {table} WHERE {column} ILIKE %s'
+        cursor.execute(query, (f"%{value}%"))
 
         rows = cursor.fetchall()
         col_names = [desc[0] for desc in cursor.description]
