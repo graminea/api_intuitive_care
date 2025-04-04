@@ -19,8 +19,6 @@ def search():
     table = "relatorio_cadop"
     column = request.args.get("column", "reg_ans")   # Default column
     value = request.args.get("value", "")  # Search term
-    limit = int(request.args.get("limit", 10))  # Results per page
-    offset = int(request.args.get("offset", 0))  # Pagination offset
 
     # Secure table and column filtering
     allowed_tables = ["relatorio_cadop"]
@@ -43,9 +41,7 @@ def search():
         results = [dict(zip(col_names, row)) for row in rows]
 
         return jsonify({
-            "results": results,
-            "next_offset": offset + limit,
-            "prev_offset": max(0, offset - limit)
+            "results": results
         })
     
     else:
@@ -58,9 +54,7 @@ def search():
         results = [dict(zip(col_names, row)) for row in rows]
 
         return jsonify({
-            "results": results,
-            "next_offset": offset + limit,
-            "prev_offset": max(0, offset - limit)
+            "results": results
         })
 
 
