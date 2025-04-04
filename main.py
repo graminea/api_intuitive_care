@@ -17,7 +17,7 @@ def search():
     conn = get_db_connection()
     cursor = conn.cursor()
     table = "relatorio_cadop"
-    column = request.args.get("column", "razao_social")   # Default column
+    column = request.args.get("column", "reg_ans")   # Default column
     value = request.args.get("value", "")  # Search term
     limit = int(request.args.get("limit", 10))  # Results per page
     offset = int(request.args.get("offset", 0))  # Pagination offset
