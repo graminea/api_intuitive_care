@@ -34,8 +34,22 @@ def search():
     if table not in allowed_tables or column not in allowed_columns:
         return jsonify({"error": "Invalid table or column"}), 400
 
-    try:
-        # Use ILIKE for partial case-insensitive match
+    if column == "reg_ans" or column == "cnpj":
+        query = f'SELECT * FROM {table} WHERE {column} = %s'
+        cursor.execute(query, (f"%{value}%"))
+
+        rows = cursor.fetchall()
+        col_names = [desc[0] for desc in cursor.description]
+        results = [dict(zip(col_names, row)) for row in rows]
+
+        return jsonify({
+            "results": results,
+            "next_offset": offset + limit,
+            "prev_offset": max(0, offset - limit)
+        })
+    
+    else:
+    # Use ILIKE for partial case-insensitive match
         query = f'SELECT * FROM {table} WHERE {column} ILIKE %s LIMIT %s OFFSET %s'
         cursor.execute(query, (f"%{value}%", limit, offset))
 
@@ -49,8 +63,6 @@ def search():
             "prev_offset": max(0, offset - limit)
         })
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
